@@ -44,8 +44,10 @@
                                 <img src="{{ asset('assets/images/default_profile.png') }}" alt=""
                                     class="img-thumbnail rounded-circle">
                             </div>
-                            <h5 class="font-size-15 text-truncate">William</h5>
-                            <p class="text-muted mb-0 text-truncate">IT Manager</p>
+                            <h5 class="font-size-15">Latest Fetched : {{ $fetched_date }}</h5>
+                            <p class="text-muted mb-0">Total Perusahaan : {{ $total_company }}</p>
+                            <p class="text-muted mb-0">Total Siswa : {{ $total_student }}</p>
+                            <p class="text-muted mb-0">Total Instansi : {{ $total_government }}</p>
                         </div>
 
                         <div class="col-sm-8">
