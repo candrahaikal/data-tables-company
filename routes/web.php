@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\PartnerController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,11 +33,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('user.login-redirect', compact('redirect'));
 // })->name('login-redirect');
 // Route::post('/login2', [AuthController::class, 'postSignInRedirect'])->name('postSignInRedirect');
-// Route::get('/register2', function () {
-//     $redirect = request()->input('redirect', route('getHomepage')); // Ambil nilai redirect atau default ke homepage
-//     return view('user.register-redirect', compact('redirect'));
-// })->name('register-redirect');
-// Route::post('/register2', [AuthController::class, 'postSignUpRedirect'])->name('postSignUpRedirect');
+Route::get('/register', function () {
+    $redirect = request()->input('redirect', route('index')); // Ambil nilai redirect atau default ke homepage
+    return view('auth.register', compact('redirect'));
+})->name('register-redirect');
+Route::post('/register', [AuthController::class, 'postSignUp'])->name('postSignUp');
 
 // // Login & Sign Up with Redirect to Route ##########
 // Route::get('/login3', function () {
@@ -70,7 +71,7 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/register-v4', [AuthController::class, 'postSignUpRedirectNoPassword'])->name('postSignUpRedirectNoPassword');
 
 // // Log Out
-// Route::post('/logout', [AuthController::class, 'postLogout'])->name('postLogout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route::post('/logout2', [AuthController::class, 'postLogoutRedirect'])->name('postLogoutRedirect');
 // Route::post('/logout3', [AuthController::class, 'postLogoutRedirectRoute'])->name('postLogoutRedirectRoute');
 
@@ -98,9 +99,9 @@ Route::get('/',[StatisticController::class, 'index'])->name(('index'));
 // start auth
 Route::get('/login', function () {
     return view('auth.login');
-});
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+})->name('login');
+Route::post('/login', [AuthController::class, 'postSignIn'])->name('postSignIn');
+// Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // end auth
 
 // start main route
@@ -108,18 +109,21 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //     return view('pages.dashboard');
 // })->name('getDashboard');
 
-Route::get('/dashboard', [StatisticController::class, 'index'])->name('getLatestStatistic');
-
 Route::prefix('company')->group(function () {
     Route::get('/', [CompanyController::class, 'index'])->name('getCompany');
     Route::get('/add', [CompanyController::class, 'getAddCompany'])->name('getAddCompany');
+    Route::post('/update-grade', [CompanyController::class, 'updateGrade'])->name('update-grade');
+    // routes/web.php
     // Route::post('/add', [CompanyController::class, 'postAddCompany'])->name('postAddCompany');
     // Route::get('/edit', [CompanyController::class, 'getEditCompany'])->name('getEditCompany');
     // Route::post('/edit', [CompanyController::class, 'postEditCompany'])->name('postEditCompany');
 });
 // end main route
 
+Route::prefix('partner')->group(function (){
+    Route::get('/', [PartnerController::class, 'index'])->name('getStudentPartner');
+    Route::post('/store-note', [PartnerController::class, 'storeNote'])->name('storeNoteStudent');
+    Route::post('/verify-all-students', [PartnerController::class, 'verifyAllStudents'])->name('verifyAllStudents');
 
+});
 
-
-// Mine

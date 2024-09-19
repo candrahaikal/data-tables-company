@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Login - Maxy</title>
+    <title>Register - Maxy</title>
 </head>
 
 <body>
@@ -44,8 +44,8 @@
                             <div class="row">
                                 <div class="col-7 col">
                                     <div class="text-primary p-4">
-                                        <h5 class="text-primary">Welcome Back!</h5>
-                                        <p>Sign in to continue to CMS</p>
+                                        <h5 class="text-primary">Welcome to Maxy!</h5>
+                                        <p>Please Sign Up at first</p>
                                     </div>
                                 </div>
                                 <div class="col-5 align-self-end col"><img
@@ -66,10 +66,13 @@
                                                 class="rounded-circle" height="34"></span></div>
                                 </a></div>
                             <div class="p-2">
-                                <form class="form-horizontal" {{ route('postSignIn') }} method="post">
+                                <form class="form-horizontal" action="{{ route('postSignUp') }}" method="post">
                                     @csrf
-                                    <div class="mb-3"><label class="form-label form-label">Username</label><input
-                                            name="email" id="email" placeholder="Enter username" type="text"
+                                    <div class="mb-3"><label class="form-label form-label">Name</label><input
+                                            name="name" placeholder="Enter name" type="text"
+                                            class="form-control form-control" aria-invalid="false" value=""></div>
+                                    <div class="mb-3"><label class="form-label form-label">Email</label><input
+                                            name="email" placeholder="Enter email" type="text"
                                             class="form-control form-control" aria-invalid="false" value=""></div>
                                     <div class="mb-3"><label class="form-label form-label">Password</label>
                                         <div class="input-group auth-pass-inputgroup"><input name="password"
@@ -78,11 +81,15 @@
                                                 class="btn btn-light " type="button" id="password-addon"><i
                                                     class="mdi mdi-eye-outline"></i></button></div>
                                     </div>
-                                    <div class="form-check"><input type="checkbox" class="form-check-input"
-                                            id="customControlInline"><label class="form-check-label"
-                                            for="customControlInline">Remember me</label></div>
+                                    <div class="mb-3"><label class="form-label form-label">Confirm Password</label>
+                                        <div class="input-group auth-pass-inputgroup"><input name="confirm-password"
+                                                placeholder="Confirm password" id="confirm-password" type="password"
+                                                class="form-control" aria-invalid="false" value=""><button
+                                                class="btn btn-light " type="button" id="confirm-password-addon"><i
+                                                    class="mdi mdi-eye-outline"></i></button></div>
+                                    </div>
                                     <div class="mt-3 d-grid"><button class="btn btn-primary btn-block "
-                                            type="submit">Log In</button></div>
+                                            type="submit">Sign Up</button></div>
                                     {{-- <div class="mt-4 text-center">
                                         <h5 class="font-size-14 mb-3">Sign in with</h5>
                                         <ul class="list-inline">
@@ -104,9 +111,9 @@
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <p>Don't have an account ? <a class="fw-medium text-primary"
-                                href="/register">
-                                Signup now </a> </p>
+                        <p>Already have an account ? <a class="fw-medium text-primary"
+                                href="/login">
+                                Log In </a> </p>
                         <p>© 2024 Maxy Academy</p>
                     </div>
                 </div>
@@ -117,9 +124,15 @@
     <script>
         const passwordInput = document.getElementById('password');
         const passwordInputBtn = document.getElementById('password-addon');
+        const passwordConfirmInput = document.getElementById('confirm-password');
+        const passwordConfirmInputBtn = document.getElementById('confirm-password-addon');
 
         passwordInputBtn.addEventListener('click', () => {
             passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
+        })
+
+        passwordConfirmInputBtn.addEventListener('click', () => {
+            passwordConfirmInput.type == 'password' ? passwordConfirmInput.type = 'text' : passwordConfirmInput.type = 'password';
         })
     </script>
 </body>

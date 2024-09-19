@@ -28,6 +28,6 @@ class GradingStudent extends Model
     }
 
     public function m_partner(){
-        return $this->belongsTo(MPartner::class);
+        return $this->belongsTo(MPartner::class, 'partner_id');
     }
 }

@@ -5,9 +5,24 @@ $(document).ready(function () {
         scrollX: true,
         lengthChange: false,
         buttons: [
-            "copy",
-            "excel",
-            "pdf",
+            {
+                extend: "copy",
+                exportOptions: {
+                    columns: ':not(:nth-child(3)):not(:last-child)' // Abaikan kolom "Report" dan "Action"
+                }
+            },
+            {
+                extend: "excel",
+                exportOptions: {
+                    columns: ':not(:nth-child(3)):not(:last-child)' // Abaikan kolom "Report" dan "Action"
+                }
+            },
+            {
+                extend: "pdf",
+                exportOptions: {
+                    columns: ':not(:nth-child(3)):not(:last-child)' // Abaikan kolom "Report" dan "Action"
+                }
+            },
             {
                 extend: "colvis",
                 className: "custom-colvis-btn",
@@ -18,7 +33,10 @@ $(document).ready(function () {
             },
         ],
         searching: true,
-        columnDefs: [{ visible: false, targets: [-6, -5, -4, -3, 1] }],
+        columnDefs: [
+            { targets: [/* indeks kolom yang ingin disembunyikan */], visible: false },
+            { targets: '_all', defaultContent: '' } // Tambahkan ini untuk memastikan kolom tidak kosong
+        ],
         initComplete: function () {
             // Simpan referensi API DataTables dalam variabel
             var api = this.api();
@@ -26,14 +44,13 @@ $(document).ready(function () {
             // Iterasi setiap kolom
             api.columns().every(function () {
                 var column = this;
-                var title = column.header().textContent; // Gunakan header() untuk mendapatkan judul kolom
+                var title = column.header().textContent;
                 var columnIndex = column.index();
                 var totalColumns = api.columns().count();
-                var statusColumnIndex = totalColumns - 2; // Indeks kolom status (ke-2 dari akhir)
+                var statusColumnIndex = totalColumns - 2;
 
                 // Jika ini adalah kolom status
                 if (columnIndex === statusColumnIndex) {
-                    // Membuat elemen dropdown dengan opsi yang diinginkan
                     var select = $(
                         '<select class="form-control"><option value="">All</option><option value="Aktif">Aktif</option><option value="Non Aktif">Nonaktif</option></select>'
                     )
@@ -47,8 +64,7 @@ $(document).ready(function () {
                                 .draw();
                         });
                 } else {
-                    // Membuat elemen input text untuk kolom lainnya
-                    $(
+                    $( 
                         '<input class="form-control" type="text" placeholder="Search ' +
                             title +
                             '" />'

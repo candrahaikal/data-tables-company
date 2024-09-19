@@ -23,6 +23,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('getStudentPartner') }}" class="waves-effect">
+                        <i class='bx bx-book'></i>
+                        <span key="t-company">Student</span>
+                    </a>
+                </li>
+
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class='bx bx-book'></i>
